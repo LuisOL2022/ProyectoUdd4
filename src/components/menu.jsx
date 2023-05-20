@@ -10,7 +10,7 @@ return (
         <img src="uno.jpg" alt="Plato 1" />
         <h3>Italiano XL</h3>
         <p>Completo italiano que trae palta, tomate y mayo</p>
-        <span>$2290</span>
+        <span>$2990</span>
         </div>
         <div className="menu-item">
         <img src="seis.jpg" alt="Plato 2" />
