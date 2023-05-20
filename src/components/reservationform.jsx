@@ -1,51 +1,125 @@
-import React, { useState } from 'react';
-import Input from './input';
+import { React, useState, useRef } from 'react';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import './reservationform.css'
 
-const ReservationForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+export function ReservationForm() {
+  const [Nombre, setNombre] = useState('');
+  const [Fecha, setFecha] = useState('');
+  const [Hora, setHora] = useState('');
+  const [Correo, setCorreo] = useState('');
+  const refNombre = useRef(null);
+  const refFecha = useRef(null);
+  const refHora = useRef(null);
+  const refCorreo = useRef(null);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Aquí se puede enviar la información de la reserva a una API o a una base de datos.
-    console.log('Reserva realizada:', { name, email, date, time });
+  const agregarReserva = async () => {
+    if (Nombre !== '' && Fecha !== '' && Hora !== '' && Correo !== '') {
+      const { id } = await addDoc(collection(db, 'reservas'), {
+        Nombre: Nombre,
+        Fecha: Fecha,
+        Hora: Hora,
+        Correo: Correo
+      });
+
+      if (id !== '') {
+        alert('¡Reserva guardada con éxito!');
+        setNombre('');
+        setFecha('');
+        setHora('');
+        setCorreo('');
+      } else {
+        alert('Error: no se pudo reservar');
+      }
+    } else {
+      alert('Debes llenar todos los campos');
+    }
+    refNombre.current.focus();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input 
-        label="Nombre" 
-        type="text" 
-        name="name" 
-        value={name} 
-        onChange={(event) => setName(event.target.value)} 
-      />
-      <Input 
-        label="Correo electrónico" 
-        type="email" 
-        name="email" 
-        value={email} 
-        onChange={(event) => setEmail(event.target.value)} 
-      />
-      <Input 
-        label="Fecha" 
-        type="date" 
-        name="date" 
-        value={date} 
-        onChange={(event) => setDate(event.target.value)} 
-      />
-      <Input 
-        label="Hora" 
-        type="time" 
-        name="time" 
-        value={time} 
-        onChange={(event) => setTime(event.target.value)} 
-      />
-      <button type="submit" className="btn btn-primary">Reservar</button>
-    </form>
-  );
-};
 
-export default ReservationForm
+    <div className="content">
+      <div className="form">
+        <h2>Reservaciones</h2>
+        <form className="form-container">
+          <div className="form-item col-5">
+            <input
+              className="input"
+              type="text"
+              required="required"
+              id="Nombre"
+              ref={refNombre}
+              value={Nombre}
+              onChange={(event) => {
+                setNombre(event.target.value);
+              }}
+              placeholder="Ingresa tu nombre"
+              autoFocus
+            />
+            <label className="label" htmlFor="titulo">
+              Nombre
+            </label>
+          </div>
+          <div className="form-item col-5">
+            <input
+              className="input"
+              type="text"
+              required="required"
+              id="Fecha"
+              ref={refFecha}
+              value={Fecha}
+              onChange={(event) => {
+                setFecha(event.target.value);
+              }}
+              placeholder="Indica la fecha"
+            />
+            <label className="label" htmlFor="Fecha">
+              Fecha
+            </label>
+          </div>
+          <div className="form-item col-5">
+            <input
+              className="input"
+              type="time"
+              required="required"
+              id="Hora"
+              ref={refHora}
+              value={Hora}
+              onChange={(event) => {
+                setHora(event.target.value);
+              }}
+              placeholder="Indica la hora"
+            />
+            <label className="label" htmlFor="Hora">
+              Hora
+            </label>
+          </div>
+          <div className="form-item">
+            <input
+              className="input"
+              type="text"
+              required="required"
+              id="Correo"
+              ref={refCorreo}
+              value={Correo}
+              onChange={(event) => {
+                setCorreo(event.target.value);
+              }}
+              placeholder="Ingresa tu correo"
+            />
+            <label className="label" htmlFor="Correo">
+              Correo
+            </label>
+          </div>
+          <div className="form-item">
+            <input className="btn-enviar" type="button" value="Agregar" onClick={agregarReserva} />
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default ReservationForm;
+
