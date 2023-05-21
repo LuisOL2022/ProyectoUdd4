@@ -58,7 +58,7 @@ export function ReservationForm() {
               autoFocus
             />
             <label className="label" htmlFor="titulo">
-              Nombre
+              
             </label>
           </div>
           <div className="form-item col-5">
@@ -75,7 +75,7 @@ export function ReservationForm() {
               placeholder="Indica la fecha"
             />
             <label className="label" htmlFor="Fecha">
-              Fecha
+              
             </label>
           </div>
           <div className="form-item col-5">
@@ -92,7 +92,7 @@ export function ReservationForm() {
               placeholder="Indica la hora"
             />
             <label className="label" htmlFor="Hora">
-              Hora
+              
             </label>
           </div>
           <div className="form-item">
@@ -109,7 +109,7 @@ export function ReservationForm() {
               placeholder="Ingresa tu correo"
             />
             <label className="label" htmlFor="Correo">
-              Correo
+              
             </label>
           </div>
           <div className="form-item">

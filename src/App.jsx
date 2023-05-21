@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <>
-    <header className='nav'>
+    <header>
       <Navbar/>
     </header>
       <div>
